@@ -8,7 +8,7 @@ let generateSecretKey = () => {
 const SECRET_KEY = process.env.SECRET_KEY || generateSecretKey();
 
 exports.SECRET_KEY = SECRET_KEY;
-exports.generateSecretKey = generateSecretKey;
+// exports.generateSecretKey = generateSecretKey;
 
 
 exports.authMiddleware = (req, res, next) => {
