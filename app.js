@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
+const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const stuffRoutes = require("./routes/stuff");
 const userRoutes = require("./routes/user");
@@ -11,11 +12,40 @@ require('dotenv').config();
 const mongoKey = process.env.mongoKey;
 
 
-mongoose.connect(mongoKey,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-  .then(() => console.log("Connexion à MongoDB réussie"))
-  .catch((err) => console.log("Connexion à MongoDB échouée", err));
+// mongoose.connect(mongoKey,
+//     { useNewUrlParser: true, useUnifiedTopology: true }
+//   )
+//   .then(() => console.log("Connexion à MongoDB réussie"))
+//   .catch((err) => console.log("Connexion à MongoDB échouée", err));
+
+
+  const mongoClient = new MongoClient(mongoKey, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+  async function connectMongo() {
+    try {
+      await mongoClient.connect();
+      const database = mongoClient.db("votre-nom-de-base-de-données");
+      app.locals.db = database; // Vous pouvez stocker la connexion MongoDB dans l'objet app.locals
+      console.log("Connexion à MongoDB réussie");
+    } catch (err) {
+      console.error("Connexion à MongoDB échouée", err);
+    }
+  }
+  
+  connectMongo(); // Appel de la fonction pour se connecter à MongoDB
+
+  mongoose.connect(mongoKey, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+    .then(() => console.log("Connexion à MongoDB (via Mongoose) réussie"))
+    .catch((err) => console.log("Connexion à MongoDB (via Mongoose) échouée", err));
 
 app.use(cors());
 
