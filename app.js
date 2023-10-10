@@ -30,7 +30,7 @@ const mongoKey = process.env.mongoKey;
   async function connectMongo() {
     try {
       await mongoClient.connect();
-      const database = mongoClient.db("votre-nom-de-base-de-données");
+      const database = mongoClient.db("Cluster0");
       app.locals.db = database; // Vous pouvez stocker la connexion MongoDB dans l'objet app.locals
       console.log("Connexion à MongoDB réussie");
     } catch (err) {
