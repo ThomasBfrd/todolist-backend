@@ -8,7 +8,7 @@ const userRoutes = require("./routes/user");
 
 require('dotenv').config();
 
-const mongoKey = process.env.mongoKey; // Utilisez process.env.mongoKey pour accéder à la clé MongoDB
+const mongoKey = process.env.mongoKey;
 
 
 mongoose.connect(mongoKey,
