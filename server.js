@@ -20,7 +20,7 @@ if (port >= 0) {
     return false;
 };
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '9002');
 app.set('port', port)
 
 const errorHandler = error => {
